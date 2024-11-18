@@ -1,4 +1,5 @@
 """Computation of weighted average of squares."""
+import argparse
 from argparse import ArgumentParser
 
 def average_of_squares(list_of_numbers, list_of_weights=None):
