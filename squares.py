@@ -50,20 +50,26 @@ def convert_numbers(list_of_strings):
     # ...then convert each substring into a number
     return [float(number_string) for number_string in all_numbers]
 
+def convert_numbers_from_file(file_path):
+    """Read numbers from a file and convert them to a list of floats."""
+    with open(file_path, 'r') as f:
+        content = f.read().strip()
+    return [float(number) for number in content.split()]
+
 
 if __name__ == "__main__":
 
     parse = ArgumentParser(description="Compute the weighted average of some numbers.")
-    parse.add_argument("numbers", type=str, nargs="+",
-                       help="the numbers to average (as strings)")
-    parse.add_argument("--weights", type=str, nargs="+", default=None,
-                       help="the weights of the numbers (as strings)")
+    parse.add_argument("numbers_file", type=str,
+                       help="path to the file containing the numbers to average")
+    parse.add_argument("--weights_file", type=str, default=None,
+                       help="path to the file containing the weights of the numbers")
     
     args = parse.parse_args()
     
-    numbers = convert_numbers(args.numbers)
-    
-    weights  = convert_numbers(args.weights)
+    numbers = convert_numbers_from_file(args.numbers_file)
+
+    weights = convert_numbers_from_file(args.weights_file) if args.weights_file else None
    
     result = average_of_squares(numbers, weights)
     
