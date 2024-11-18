@@ -55,18 +55,15 @@ if __name__ == "__main__":
     parse = ArgumentParser(description="Compute the weighted average of some numbers.")
     parse.add_argument("numbers", type=str, nargs="+",
                        help="the numbers to average (as strings)")
-    parse.add_argument("--weights", type=str, default=None,
+    parse.add_argument("--weights", type=str, nargs="+", default=None,
                        help="the weights of the numbers (as strings)")
+    
     args = parse.parse_args()
     
     numbers = convert_numbers(args.numbers)
     
-    weights = None
-    if args.weights:
-        weights = convert_numbers(args.weights)
-        if len(weights) != len(numbers):
-            raise ValueError("Number of weights must match number of values")
-    
+    weights  = convert_numbers(args.weights)
+   
     result = average_of_squares(numbers, weights)
     
     print(result)
